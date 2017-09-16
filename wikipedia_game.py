@@ -8,20 +8,19 @@ MAX_RESULTS= 100
 WORD_LABEL = 'word'
 STRONG_WORD_RELATION_API = "https://api.datamuse.com/words?rel_trg={word}&max=" + str(MAX_RESULTS)
 WEAK_WORD_RELATION_API = "https://api.datamuse.com/words?rel_trg={word}&max=" + str(MAX_RESULTS)
-WIKIPEDIA_URL = "https://en.wikipedia.org/wiki/{word}"
-
+WIKIPEDIA_URL = "https://en.wikipedia.org/wiki/{word}"      
 STATUS_FILE = 'computation_status.json'
 
 def string_to_title(string):
     return string.replace(' ', '+')
 
-def string_to_url(string):
+def string_to_url(string):      
     return WIKIPEDIA_URL.format(word=string.replace(' ', '_'))
 
 def contruct_word_relation(end_page, api_call):
     relations = [end_page.lower()]
     s = requests.Session()
-
+    
     r = s.get(api_call.format(word=end_page));
     data = json.loads(r.text)
 
@@ -33,28 +32,50 @@ def contruct_word_relation(end_page, api_call):
 def compare_links_and_relations(relations, current_links, path):
     match = False
 
-    for word in relations:
-        for link in current_links:
-            if word == link.lower():
-                match = True
-                for node in path:
-                    print(word + " vs. " + node.lower())
-                    if word in node.lower():
-                        match = False
-                if match:
-                    return link
+    # print ("CURRLINKS for: " + str(current_links))
+    # input("Press Enter to continue...")
 
     for word in relations:
         for link in current_links:
-            if word in link.lower():
-                match = True
-                # print(word + " vs. " + str(path))
-                for node in path:
-                    print(word + " vs. " + node.lower())
-                    if word in node.lower():
-                        match = False
-                if match:
+            match = False
+            for node in path:
+                if ((link.lower() == node.lower()) or ("disambiguation" in link.lower())) :
+                    match=True
+            if (not match):
+                if (word == link.lower()):
+                    #print (link.lower())
+                    #print ("PATH: " + str(path))
+                    #input("Press Enter to continue...")
                     return link
+                elif (word in link.lower()):
+                    #print (link.lower())
+                    #print ("PATH: " + str(path))
+                    #input("Press Enter to continue...")
+                    return link
+
+
+    # for word in relations:
+    #     for link in current_links:
+    #         if word == link.lower():
+    #             match = True
+    #             for node in path:
+    #                 print(word + " vs. " + node.lower())
+    #                 if link.lower() == node.lower():
+    #                     match = False
+    #             if match:
+    #                 return link
+
+    # for word in relations:
+    #     for link in current_links:
+    #         if word in link.lower():
+    #             match = True
+    #             # print(word + " vs. " + str(path))
+    #             for node in path:
+    #                 print(word + " vs. " + node.lower())
+    #                 if link.lower() == node.lower():
+    #                     match = False
+    #             if match:
+    #                 return link
 
     return None
 
@@ -82,7 +103,15 @@ def main(args):
     response['complete'] = match_found
 
     while (link_count < limit and (not match_found)):
-        current_links = wikipedia.WikipediaPage(title=current_page).links
+        try:
+            current_links = wikipedia.WikipediaPage(title=path[-1]).links
+        except:
+            broken=path[-1]
+            del path[-1]
+            current_links = wikipedia.WikipediaPage(path[-1]).links
+            current_links.remove(broken)
+            link_count -= 1
+
         current_page = compare_links_and_relations(strong_relations, current_links, path)
 
         if not current_page:
