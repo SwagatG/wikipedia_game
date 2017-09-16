@@ -8,30 +8,30 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
       <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400,500,700" rel="stylesheet">
    </head>
-   <form action="" method="POST" role="form" class="form-horizontal">
+  <form id="wikiGameForm" action="" method="POST" role="form" class="form-horizontal">
       <body>
          <div class="container-fluid">
          <section class="container">
             <div class="container-page">
-               <h3 class="dark-grey" style="font-family: 'Roboto', sans-serif; font-weight: 500"">Play The Wikipedia Game</h3>
+               <h3 class="dark-grey" style="font-family: 'Roboto', sans-serif; font-weight: 500">Play The Wikipedia Game</h3>
                <div class="container">
                   <div class="row">
                      <div class="col align-self-start">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                           <input class="mdl-textfield__input" type="text" id="sample3">
-                           <label class="mdl-textfield__label" for="sample3">Starting Page</label>
+                           <input class="mdl-textfield__input" type="text" id="start_page">
+                           <label class="mdl-textfield__label" for="start_page">Starting Page</label>
                         </div>
                      </div>
                      <div class="col align-self-center">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                           <input class="mdl-textfield__input" type="text" id="sample3">
-                           <label class="mdl-textfield__label" for="sample3">Target Page</label>
+                           <input class="mdl-textfield__input" type="text" id="end_page">
+                           <label class="mdl-textfield__label" for="end_page">Target Page</label>
                         </div>
                      </div>
                      <div class="col align-self-end">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                           <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
-                           <label class="mdl-textfield__label" for="sample4">Maximum Turns Allowed</label>
+                           <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="max_turns">
+                           <label class="mdl-textfield__label" for="max_turns">Maximum Turns Allowed</label>
                            <span class="mdl-textfield__error">Input is not a number!</span>
                         </div>
                      </div>
@@ -42,4 +42,25 @@
          </div>
       </body>
    </form>
+   <script>
+ 	$("#wikiGameForm").submit(funciton(e){
+ 		e.preventDefault();
+
+ 		$.ajax({
+ 			type: "POST",
+ 			url: "/start_computation"
+ 			data: {
+ 				start_page: ("#start_page").val(),
+ 				end_page: ("#end_page").val(),
+ 				max_turns: ("#max_turns").val()
+ 			},
+ 			success: function(data){
+
+ 			}
+ 		})
+
+ 	})
+
+ 	</script>
+
 </html>
