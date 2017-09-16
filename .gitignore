@@ -1,7 +1,5 @@
-
 test.py
-
-
+computation_status.json
 *.py[co]
 *.DS_*
 # Packages
