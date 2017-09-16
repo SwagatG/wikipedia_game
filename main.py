@@ -14,3 +14,6 @@ def get_status():
     with open(STATUS_FILE, 'r') as infile:
         data = json.loads(infile)
     return data
+
+if __name__ == '__main__':
+  app.run(port=80)
