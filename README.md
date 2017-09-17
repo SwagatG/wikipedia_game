@@ -1,2 +1,40 @@
-# wikipedia_game
-A python script designed to get form one page on wikipedia to another using only links on the pages.
+# Wikipedia Game - Hack the North 2017
+
+While creating this game, we decided to take a twist on the classic Wikipedia game that every child has undoubtedly played while growing up. The rules of the game is as follows:
+- a starting Wikipedia page is defined
+- an target Wikipedia page is defined
+- the player must start from the starting Wikipedia page and get to the target Wikipedia page whilst only clicking embedded links on each Wikipedia page
+- the goal of the game is to simply reduce the number of clicked links needed to get from the starting page to the target page
+
+Our team decided to create a web app that requires the use of smart bots in order to solve the classic Wikipedia game with maximized efficiency.
+
+
+## Getting Started
+
+Dependencies:
+* Flask (http://flask.pocoo.org/)
+* Python (https://www.python.org/)
+
+In order to get the project up and running on your machine, clone the repository and open up your Python terminal.
+
+Instructions:
+1. ````cd```` into the main directory
+2. ````set FLASK_APP=main.py````
+3. ````set FLASK_DEBUG=1````
+4. ````flask run````
+5. Go to the address shown in the terminal
+
+
+## Built With
+
+* [Datamuse API](https://www.datamuse.com/api/)
+
+
+## Contributors
+
+* Kevin Jin
+* Swagat Ghimire
+* Jay Weng
+* Jasmine Jian
+
+See also the list of [contributors](https://github.com/SwagatG/wikipedia_game/graphs/contributors) who participated in this project.
