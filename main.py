@@ -8,7 +8,9 @@ STATUS_FILE = 'computation_status.json'
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    labels = ["January","February","March","April","May","June","July","August"]
+    values = [10,9,8,7,6,4,7,8]
+    return render_template('index.html', values=values, labels=labels)
 
 @app.route('/get_status', methods=['GET'])
 def get_status():

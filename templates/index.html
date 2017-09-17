@@ -1,87 +1,147 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400,500,700" rel="stylesheet">
-        <style type="text/css">
-            body {
-            background-image: url("static/background.jpg");
-            }
-            .content {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-            }
-            .center-x {
-            width: 50%; 
-            margin: 0 auto;
-            }
-            .mdl-textfield {
-            width: 100%;
-            }
-        </style>
-    </head>
-    <form action="" method="POST" role="form" class="form-horizontal">
-        <body>
-            <div class="container-fluid content" style="width: 50%">
-            <section class="container" style="background-color: white; width: 100%">
-                <div class="container-page">
-                    <h3 class="dark-grey" style="font-family: 'Roboto', sans-serif; font-weight: 500; text-align: center;">Play The Wikipedia Game</h3>
-                    <div class="container" style="width: 100%">
-                        <div class="row">
-                            <div class="col align-self-start center-x">
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                                    <input class="mdl-textfield__input" type="text" id="sample3">
-                                    <label class="mdl-textfield__label" for="sample3">Starting Page</label>
-                                </div>
-                            </div>
-                            <div class="col align-self-center center-x">
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                                    <input class="mdl-textfield__input" type="text" id="sample3">
-                                    <label class="mdl-textfield__label" for="sample3">Target Page</label>
-                                </div>
-                            </div>
-                            <div class="col align-self-end center-x">
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
-                                    <label class="mdl-textfield__label" for="sample4">Maximum Turns Allowed</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                            </div>
-                            <div class="center-x">
-                                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="justify-content: center; text-align: center; margin-top: 20px; margin-bottom: 10px;">
+
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400,500,700" rel="stylesheet">
+  <style type="text/css">
+    body {
+      background-image: url("static/background.jpg");
+    }
+
+    .content {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .center-x {
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    .mdl-textfield {
+      width: 100%;
+    }
+  </style>
+</head>
+<form action="" method="POST" role="form" class="form-horizontal">
+
+  <body>
+    <div class="container-fluid content" style="width: 50%">
+      <section class="container" style="background-color: white; width: 100%">
+        <div class="container-page">
+          <h3 class="dark-grey" style="font-family: 'Roboto', sans-serif; font-weight: 500; text-align: center;">Play The Wikipedia Game</h3>
+          <div class="container" style="width: 100%">
+            <div class="row">
+              <div class="col align-self-start center-x">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
+                  <input class="mdl-textfield__input" type="text" id="sample3">
+                  <label class="mdl-textfield__label" for="sample3">Starting Page</label>
+                </div>
+              </div>
+              <div class="col align-self-center center-x">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
+                  <input class="mdl-textfield__input" type="text" id="sample3">
+                  <label class="mdl-textfield__label" for="sample3">Target Page</label>
+                </div>
+              </div>
+              <div class="col align-self-end center-x">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
+                  <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
+                  <label class="mdl-textfield__label" for="sample4">Maximum Turns Allowed</label>
+                  <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+              </div>
+              <div class="center-x">
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="justify-content: center; text-align: center; margin-top: 20px; margin-bottom: 10px;">
                                 	Commence Hacking
                                 </button>
-                            </div>
-                        </div>
-                        <div class="center-x">
-                        </div>
-                    </div>
-            </section>
+              </div>
             </div>
-        </body>
-    </form>
+            <div class="center-x">
+            </div>
+          </div>
+      </section>
+      </div>
+  </body>
+</form>
 
-     <script>
- 	$("#wikiGameForm").submit(funciton(e){
- 		e.preventDefault();
- 		$.ajax({
- 			type: "POST",
- 			url: "/start_computation"
+<script>
+  $("#wikiGameForm").submit(funciton(e){
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "/start_computation"
  			data: {
- 				start_page: ("#start_page").val(),
- 				end_page: ("#end_page").val(),
- 				max_turns: ("#max_turns").val()
- 			},
- 			success: function(data){
- 			}
- 		})
- 	})
- 	</script>
+        start_page: ("#start_page").val(),
+        end_page: ("#end_page").val(),
+        max_turns: ("#max_turns").val()
+      },
+      success: function (data) {
+      }
+    })
+  })
+
+</script>
+
+<!-- chart -->
+<script src='static/Chart.min.js'></script>
+<canvas id="chart" width="600" height="400"></canvas>
+<script>
+  // bar chart data
+  var barData = {
+    labels: [{% for item in labels %}
+  "{{item}}",
+    {% endfor %}],
+  datasets: [
+    {
+      fillColor: "rgba(151,187,205,0.2)",
+      strokeColor: "rgba(151,187,205,1)",
+      pointColor: "rgba(151,187,205,1)",
+      data: [{% for item in values %}
+                      {{item }},
+    {% endfor %}]
+      }
+      ]
+   }
+
+  Chart.defaults.global.animationSteps = 50;
+  Chart.defaults.global.tooltipYPadding = 16;
+  Chart.defaults.global.tooltipCornerRadius = 0;
+  Chart.defaults.global.tooltipTitleFontStyle = "normal";
+  Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+  Chart.defaults.global.animationEasing = "easeOutBounce";
+  Chart.defaults.global.responsive = false;
+  Chart.defaults.global.scaleLineColor = "black";
+  Chart.defaults.global.scaleFontSize = 16;
+
+  // get bar chart canvas
+  var mychart = document.getElementById("chart").getContext("2d");
+
+  steps = 10
+  max = 10
+  // draw bar chart
+  var LineChartDemo = new Chart(mychart).Line(barData, {
+    scaleOverride: true,
+    scaleSteps: steps,
+    scaleStepWidth: Math.ceil(max / steps),
+    scaleStartValue: 0,
+    scaleShowVerticalLines: true,
+    scaleShowGridLines: true,
+    barShowStroke: true,
+    scaleShowLabels: true,
+    bezierCurve: false,
+  });
+
+</script>
+
 </html>
