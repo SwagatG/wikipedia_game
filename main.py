@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Markup
 import subprocess
 import json
 
@@ -17,8 +17,8 @@ def home():
 @app.route('/get_status', methods=['GET'])
 def get_status():
     with open(STATUS_FILE, 'r') as infile:
-        data = json.loads(infile)
-    return data
+        data = json.load(infile)
+    return json.dumps(data);
 
 @app.route('/start_computation', methods=['POST'])
 def start_computation():

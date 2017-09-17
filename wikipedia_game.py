@@ -24,7 +24,8 @@ def contruct_word_relation(end_page, api_call):
 
     r = s.get(api_call.format(word=end_page));
     data = relations + json.loads(r.text)
-    data[0][SCORE_LABEL] = data[1][SCORE_LABEL] * (1 + (1/len(json.loads(r.text))))
+    if len(data) > 1:
+        data[0][SCORE_LABEL] = data[1][SCORE_LABEL] * (1 + (1/len(json.loads(r.text))))
 
     return data
 
@@ -114,17 +115,30 @@ def main(args):
             current_links.remove(broken)
             link_count -= 1
 
+        if len(current_links) <= 2:
+            del path[-1]
+            current_links = wikipedia.WikipediaPage(path[-1]).links
+            link_count -= 1
+
+
         object = compare_links_and_relations(strong_relations, current_links, path)
-        current_page = object[0]
-        score = object[1]
+        if (object == None):
+            current_page = None
+        else:
+            current_page = object[0]
+            score = object[1]
 
         if not current_page:
             print("WEAK")
             if not weak_relations:
                 weak_relations = contruct_word_relation(string_to_title(end_page), WEAK_WORD_RELATION_API);
             object = compare_links_and_relations(weak_relations, current_links, path)
-            current_page = object[0]
-            score = object[1]
+            if (object == None):
+                current_page = None
+                score = 0
+            else:
+                current_page = object[0]
+                score = object[1]
 
         if not current_page:
             print("RANDOM")
