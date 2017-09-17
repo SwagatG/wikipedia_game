@@ -4,21 +4,34 @@ import json
 BLACKLIST = 'blacklist.json'
 
 def validate(*args):
-    with open(BLACKLIST, 'r') as readfile:
-        blacklist = json.loads(readfile)
-
-    if len(blacklist) == 0:
+    try:
+        print("11")
+        with open(BLACKLIST, 'r') as readfile:
+            print("12")
+            blacklist = json.loads(readfile)
+        print("13")
+        if len(blacklist) == 0:
+            print("14")
+            blacklist = [];
+    except:
         blacklist = [];
+        print("15")
 
     errors = [];
     for arg in args:
+        print("16")
         try:
             test = wikipedia.WikipediaPage(title=arg).links
+            print("17")
         except:
+            print("18")
             errors.append(arg)
-            blacklist.append
+            blacklist.append(arg)
 
+    print("19")
     if len(errors):
-        black
-
+        with open (BLACKLIST, 'w') as writefile:
+            print("110")
+            json.dumps(blacklist)
+    print("111")
     return errors

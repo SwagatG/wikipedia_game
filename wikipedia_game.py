@@ -6,52 +6,54 @@ import wikipedia
 
 MAX_RESULTS= 100
 WORD_LABEL = 'word'
+SCORE_LABEL = 'score'
 STRONG_WORD_RELATION_API = "https://api.datamuse.com/words?rel_trg={word}&max=" + str(MAX_RESULTS)
 WEAK_WORD_RELATION_API = "https://api.datamuse.com/words?rel_trg={word}&max=" + str(MAX_RESULTS)
-WIKIPEDIA_URL = "https://en.wikipedia.org/wiki/{word}"      
+WIKIPEDIA_URL = "https://en.wikipedia.org/wiki/{word}"
 STATUS_FILE = 'computation_status.json'
 
 def string_to_title(string):
     return string.replace(' ', '+')
 
-def string_to_url(string):      
+def string_to_url(string):
     return WIKIPEDIA_URL.format(word=string.replace(' ', '_'))
 
 def contruct_word_relation(end_page, api_call):
-    relations = [end_page.lower()]
+    relations = [{WORD_LABEL: end_page.lower(), SCORE_LABEL: 0}]
     s = requests.Session()
-    
+
     r = s.get(api_call.format(word=end_page));
-    data = json.loads(r.text)
+    data = relations + json.loads(r.text)
+    data[0][SCORE_LABEL] = data[1][SCORE_LABEL] * (1 + (1/len(json.loads(r.text))))
 
-    for result in data:
-        relations.append(result[WORD_LABEL].lower())
+    return data
 
-    return relations
-
-def compare_links_and_relations(relations, current_links, path):
+def compare_links_and_relations(data, current_links, path):
     match = False
 
     # print ("CURRLINKS for: " + str(current_links))
     # input("Press Enter to continue...")
 
-    for word in relations:
+    for object in data:
+        # count=0
         for link in current_links:
             match = False
             for node in path:
+                # print("PATH: " + str(path))
+                # print("link: " + link.lower())
                 if ((link.lower() == node.lower()) or ("disambiguation" in link.lower())) :
                     match=True
             if (not match):
-                if (word == link.lower()):
+                if (object[WORD_LABEL] == link.lower()):
                     #print (link.lower())
                     #print ("PATH: " + str(path))
                     #input("Press Enter to continue...")
-                    return link
-                elif (word in link.lower()):
+                    return (link, object[SCORE_LABEL])
+                elif (object[WORD_LABEL] in link.lower()):
                     #print (link.lower())
                     #print ("PATH: " + str(path))
                     #input("Press Enter to continue...")
-                    return link
+                    return (link, object[SCORE_LABEL])
 
 
     # for word in relations:
@@ -112,29 +114,35 @@ def main(args):
             current_links.remove(broken)
             link_count -= 1
 
-        current_page = compare_links_and_relations(strong_relations, current_links, path)
+        object = compare_links_and_relations(strong_relations, current_links, path)
+        current_page = object[0]
+        score = object[1]
 
         if not current_page:
             print("WEAK")
             if not weak_relations:
                 weak_relations = contruct_word_relation(string_to_title(end_page), WEAK_WORD_RELATION_API);
-            current_page = compare_links_and_relations(weak_relations, current_links, path)
+            object = compare_links_and_relations(weak_relations, current_links, path)
+            current_page = object[0]
+            score = object[1]
 
         if not current_page:
             print("RANDOM")
             current_page = current_links[random.randrange(0, len(current_links))]
 
         path.append(current_page)
+        print("CURRENT PAGE: " + str(current_page))
         link_count += 1
         if current_page == end_page:
             match_found = True
 
         print(str(link_count) + ": " + str(path))
-
         response['length'] = link_count
         page = {}
         page['title'] = path[-1]
         page['url'] = string_to_url(page['title'])
+        page['trial'] = link_count
+        page['score'] = score
         response['path'].append(page)
         response['complete'] = match_found
 

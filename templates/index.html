@@ -9,6 +9,7 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
+  <script src="/static/jquery3-2-1.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400,500,700" rel="stylesheet">
   <style type="text/css">
     body {
@@ -16,7 +17,7 @@
         background-size: 1920px 1080px;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        background-position: 75% 75%; 
+        background-position: 75% 75%;
     }
 
     .content {
@@ -37,7 +38,7 @@
     }
   </style>
 </head>
-<form action="" method="POST" role="form" class="form-horizontal">
+<form name="wikiGameForm" id="wikiGameForm" role="form" class="form-horizontal">
 
   <body>
     <div class="container-fluid content" style="width: 50%">
@@ -48,25 +49,25 @@
             <div class="row">
               <div class="col align-self-start center-x">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                  <input class="mdl-textfield__input" type="text" id="sample3">
-                  <label class="mdl-textfield__label" for="sample3">Starting Page</label>
+                  <input class="mdl-textfield__input" type="text" id="start_page" name="start_page">
+                  <label class="mdl-textfield__label" for="start_page">Starting Page</label>
                 </div>
               </div>
               <div class="col align-self-center center-x">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                  <input class="mdl-textfield__input" type="text" id="sample3">
-                  <label class="mdl-textfield__label" for="sample3">Target Page</label>
+                  <input class="mdl-textfield__input" type="text" id="end_page" name="end_page">
+                  <label class="mdl-textfield__label" for="end_page">Target Page</label>
                 </div>
               </div>
               <div class="col align-self-end center-x">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label col align-self-start">
-                  <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
-                  <label class="mdl-textfield__label" for="sample4">Maximum Turns Allowed</label>
+                  <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="max_turns" name="max_turns">
+                  <label class="mdl-textfield__label" for="max_turns">Maximum Turns Allowed</label>
                   <span class="mdl-textfield__error">Input is not a number!</span>
                 </div>
               </div>
               <div class="center-x">
-                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="justify-content: center; text-align: center; margin-top: 20px; margin-bottom: 10px;">
+                <button name='submit_game' id='submit_game' class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="justify-content: center; text-align: center; margin-top: 20px; margin-bottom: 10px;">
                                 	Commence Hacking
                                 </button>
               </div>
@@ -79,23 +80,7 @@
   </body>
 </form>
 
-<script>
-  $("#wikiGameForm").submit(funciton(e){
-    e.preventDefault();
-    $.ajax({
-      type: "POST",
-      url: "/start_computation"
- 			data: {
-        start_page: ("#start_page").val(),
-        end_page: ("#end_page").val(),
-        max_turns: ("#max_turns").val()
-      },
-      success: function (data) {
-      }
-    })
-  })
-
-</script>
+<script type=text/javascript src="/static/index.js"></script>
 
 <!-- chart -->
 <script src='static/Chart.min.js'></script>
@@ -147,5 +132,4 @@
   });
 
 </script>
-
 </html>

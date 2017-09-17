@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import subprocess
 import json
 
+from validate_articles import validate
+
 app = Flask(__name__)
 
 STATUS_FILE = 'computation_status.json'
@@ -20,14 +22,37 @@ def get_status():
 
 @app.route('/start_computation', methods=['POST'])
 def start_computation():
-    data = request.get_json()
-    validity = validate_articles(data['start_page'], data['end_page'])
-    if validity:
-        subprocess.popen("python3 wikipedia_game.py " + data['start_page']
-                         + " " + data['end_page'], + " -l " + data['max_turns'])
-        return True
-    else:
-        return False
+    print("TESOGISGSDIGN")
+    # data = request.form.get('max_turns', None)
+    # print(json.dumps(data))
+    # print("TESTING")
+    try:
+        print("1")
+        start_page = request.form['start_page']
+        print("2")
+        end_page = request.form['end_page']
+        print("3")
+        max_turns = request.form['max_turns']
+        print("4")
+        validity = validate(start_page, end_page)
+        print("5")
+        if len(validity) == 0:
+            print("6")
+            # try:
+            subprocess.Popen(["python3", "wikipedia_game.py", start_page, end_page, "-l", max_turns])
+            # except Exception as e:
+            #     print(str(e))
+            #     print("7")
+            #     return str(False)
+            print(json.dumps({'errors': False}))
+            return json.dumps({'errors': False})
+        else:
+            print(json.dumps({'errors': validity}))
+            return json.dumps({'errors': validity})
+    except:
+        return json.dumps({'errors': True})
+        return json.dumps({'errors': True})
+    # return render_template('index.html')
 
 
 
