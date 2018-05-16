@@ -36,19 +36,19 @@ def start_computation():
         print("4")
         validity = validate(start_page, end_page)
         print("5")
-        if len(validity) == 0:
-            print("6")
+        # if len(validity) == 0:
+        #     print("6")
             # try:
-            subprocess.Popen(["python3", "wikipedia_game.py", start_page, end_page, "-l", max_turns])
+        subprocess.Popen(["python3", "wikipedia_game.py", start_page, end_page, "-l", max_turns])
             # except Exception as e:
             #     print(str(e))
             #     print("7")
             #     return str(False)
-            print(json.dumps({'errors': False}))
-            return json.dumps({'errors': False})
-        else:
-            print(json.dumps({'errors': validity}))
-            return json.dumps({'errors': validity})
+        print(json.dumps({'errors': False}))
+        return json.dumps({'errors': False})
+        # else:
+        #     print(json.dumps({'errors': validity}))
+        #     return json.dumps({'errors': validity})
     except:
         return json.dumps({'errors': True})
         return json.dumps({'errors': True})
